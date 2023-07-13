@@ -1,3 +1,7 @@
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config();
+}
+
 const express = require('express');
 const mysql = require('mysql2');
 const bodyParser = require('body-parser');
@@ -7,11 +11,11 @@ app.use(bodyParser.json());
 
 // Configuración de la conexión a la base de datos
 const connection = mysql.createConnection({
-  host: 'localhost',
-  port: 3306, 
-  user: 'root',
-  password: '@nonimouS',
-  database: 'registro'
+  host: process.env.HOST,
+  port: process.env.PORT_DB, 
+  user: process.env.USERNAME,
+  password: process.env.PASSWORD,
+  database: process.env.DATABASE
 });
 
 connection.connect((err) => {
@@ -24,10 +28,10 @@ connection.connect((err) => {
 
 // Endpoint para insertar un registro de cliente
 app.post('/nueva-hora', (req, res) => {
-  const { nombre, latitud, longitud, ipaddress } = req.body;
+  const { fecha, latitud, longitud, ipaddress } = req.body;
 
-  const query = 'INSERT INTO horas (nombre, latitud, longitud, ipaddress) VALUES (?, ?, ?, ?, ?)';
-  const values = [nombre, latitud, longitud, ipaddress];
+  const query = 'INSERT INTO horas (fecha, latitud, longitud, ipaddress) VALUES (?, ?, ?, ?, ?)';
+  const values = [fecha, latitud, longitud, ipaddress];
 
   connection.query(query, values, (error, results) => {
     if (error) {
