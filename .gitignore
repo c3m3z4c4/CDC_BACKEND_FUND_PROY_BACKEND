@@ -219,3 +219,4 @@ $RECYCLE.BIN/
 #node modiles folder
 node_modules
 # End of https://www.toptal.com/developers/gitignore/api/macos,windows,linux,node
+.vercel
