@@ -5,8 +5,11 @@ if (process.env.NODE_ENV !== 'production') {
 const express = require('express');
 const mysql = require('mysql2');
 const bodyParser = require('body-parser');
+var cors = require('cors');
+
 
 const app = express();
+app.use(cors())
 app.use(bodyParser.json());
 
 // Configuración de la conexión a la base de datos
@@ -28,10 +31,12 @@ connection.connect((err) => {
 
 // Endpoint para insertar un registro de cliente
 app.post('/nueva-hora', (req, res) => {
-  const { fecha, latitud, longitud, ipaddress } = req.body;
+  const { fecha, latitud, longitud, ipaddress, ciudad } = req.body;
 
-  const query = 'INSERT INTO horas (fecha, latitud, longitud, ipaddress) VALUES (?, ?, ?, ?, ?)';
-  const values = [fecha, latitud, longitud, ipaddress];
+  const query = `INSERT INTO horas (fecha, latitud, longitud, ipaddress, ciudad) VALUES (?, ?, ?, ?, )`;
+  const values = [fecha, latitud, longitud, ipaddress, ciudad];
+
+  console.log(query)
 
   connection.query(query, values, (error, results) => {
     if (error) {
