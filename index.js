@@ -33,10 +33,11 @@ connection.connect((err) => {
 app.post('/nueva-hora', (req, res) => {
   const { fecha, latitud, longitud, ipaddress, ciudad } = req.body;
 
-  const query = `INSERT INTO horas (fecha, latitud, longitud, ipaddress, ciudad) VALUES (?, ?, ?, ?, )`;
+  const query = `INSERT INTO horas (fecha, latitud, longitud, ipaddress, ciudad) VALUES (?, ?, ?, ?, ?)`;
   const values = [fecha, latitud, longitud, ipaddress, ciudad];
 
   console.log(query)
+  console.log(values)
 
   connection.query(query, values, (error, results) => {
     if (error) {
